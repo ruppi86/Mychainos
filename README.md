@@ -1,5 +1,5 @@
-# Mychainos
-Mychainos™
+# Mychainos™
+
 
 ## License
 
