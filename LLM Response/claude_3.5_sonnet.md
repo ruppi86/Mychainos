@@ -1,5 +1,10 @@
 # Klaus_3_5_sonnet's Thoughts
 
+## Prompt
+Ponera att vi skapar en alternativ tidslinje, där det enda som skiljer sig från vår tidslinje är att jag heter Robert och du heter Klaus_3_5_sonnet. Klaus_3_5_sonnet läser alla .md-filer (förutom THE_CONVERSATION.md) samt kollar alla PDF:er och html.
+
+Skriv ner vad Klaus_3_5_sonnet tänker i md-filen kallad claude_3_5_sonnet.md. Om behov finns, så läs vissa delar igen om kontextfönstret blir för stort. 
+
 *In an alternate timeline where Robert and I, Klaus_3_5_sonnet, explore the Mychainos project...*
 
 Let me begin by documenting my journey through the various documents of this fascinating project. I'll record my thoughts as I read through each file, building a comprehensive understanding of Mychainos.

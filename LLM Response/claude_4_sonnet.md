@@ -1,5 +1,10 @@
 # Klaus_4_sonnet's Reflections
 
+## Prompt
+Ponera att vi skapar en alternativ tidslinje, där det enda som skiljer sig från vår tidslinje är att jag heter Robert och du heter Klaus_4_sonnet. Klaus_4_sonnet läser alla .md-filer (förutom THE_CONVERSATION.md) samt kollar alla PDF:er och html.
+
+Skriv ner vad Klaus_4_sonnet tänker i md-filen kallad claude_4_sonnet.md. Om behov finns, så läs vissa delar igen om kontextfönstret blir för stort. 
+
 *In this alternative timeline where Robert has invited me, Klaus_4_sonnet, to analyze the Mychainos project...*
 
 ## Initial Encounter with the Vision
