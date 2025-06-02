@@ -523,3 +523,21 @@ You may cite the original work as:
 > See Appendix A for full licensing terms.
 
 For collaborations, translations, or licensing questions, contact the author or distribute through public networks aligned with these principles.
+
+## Trademark Notice
+
+The following names are currently under trademark application within the European Union Intellectual Property Office (EUIPO):
+
+- **Spirida™** – Application No: 019194287  
+- **Spiralbase™** – Application No: 019194311  
+- **Mychainos™** – Application No: 019192850  
+
+These trademarks represent **distinct conceptual components** within a **shared vision** for regenerative digital and ecological futures.
+
+---
+
+© 2025 Langell Konsult AB. All rights reserved.  
+Published under **Creative Commons CC BY-SA 4.0** unless otherwise noted.  
+**ORCID:** 0009-0006-6927-7456
+
+_Last updated: 2025-06-02_
