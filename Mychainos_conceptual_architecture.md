@@ -217,15 +217,14 @@ Finally, the core decides on **impulses to send to outputs**. These impulses are
 
 For instance, instead of:
 
-´´python
+´´´python
 set_light(brightness=87)
-´´
-
+´´´
 The core might output a more abstract instruction like:
 
-´´python
+´´´python
 enter_mode("slow_glow", tint="blue")
-´´
+´´´
 
 The exact mechanism could be:
 
@@ -338,9 +337,9 @@ As a **poetic computing system**, Mychainos may express itself in **words or sym
 These are not literal logs, but **creative reflections** of system state.  
 Example:
 
-´´python
+´´´python
 "The aura shifts to a gentle gold, acknowledging new warmth"
-´´
+´´´
 
 Alternatives may include:
 
@@ -380,9 +379,9 @@ Example:
 - A **quickening light pulse**  
 - Rising **audio pitch**  
 - Textual output:
-  ´´python
+  ´´´python
   "A tremble of excitement runs through the roots."
-  ´´
+  ´´´
 
 > The architecture **avoids one-to-one input-output mapping**.  
 > Instead, it creates a **gestalt** – a holistic expressive output shaped by the internal state as a whole.
@@ -504,15 +503,15 @@ Its design is based on the idea that **meaning emerges through patterns over tim
   - This notation is **open to interpretation**, like a musical score or poem
 
   Example symbolic expression:  
-  ´´text  
+  ´´´text  
   ~~ ~~  
-  ´´  
+  ´´´  
   (e.g., light brightening and dimming in a slow wave — twice)
 
   Another example:  
-  ´´text  
+  ´´´text  
   rise, rise, echo  
-  ´´  
+  ´´´  
   (e.g., sound increasing twice, then echoing)
 
 - **Multi-Modal Fusion**  
@@ -750,9 +749,9 @@ Design requirements:
 
 The system avoids rigid conditionals like:
 
-´´python
+´´´python
 if 3_people_singing: light = blue
-´´
+´´´
 
 Instead, rules are expressive:
 
@@ -818,9 +817,9 @@ You can **simulate sensors** or connect real devices.
 - **Light Sensor**:  
   Use a sine wave to mimic day-night cycles:
 
-  ´´python  
+  ´´´python  
   light_sensor(value)  
-  ´´
+  ´´´
 
 - **Sound**:  
   Generate pulse trains or use a microphone input.  
@@ -843,24 +842,24 @@ Start with symbolic patterns:
 - Example:  
   Light levels → `L`, `M`, `H`  
   Sequence:  
-  ´´text  
+  ´´´text  
   LLMMHH  
-  ´´
+  ´´´
 
 - Example:  
   Sound BPM →  
-  ´´text  
+  ´´´text  
   beat_fast_medium  
-  ´´
+  ´´´
 
 Initial implementation could be a simple JSON-like structure:
 
-´´json  
+´´´json  
 {  
   "light_pattern": [0, 0, 1, 1, 2, 2],  
   "sound_pattern": [1, 0, 1, 0, ...]  
 }  
-´´
+´´´
 
 Later versions may use classes or richer data structures that support merging, repeating, or symbolic modifiers.
 
@@ -872,12 +871,12 @@ Choose a **data structure** to hold and decay memory.
 
 Simple approach in Python:
 
-´´python  
+´´´python  
 memory = [  
   {"pattern": X, "strength": s, "timestamp": t},  
   ...  
 ]  
-´´
+´´´
 
 At each loop iteration:
 
@@ -922,11 +921,11 @@ Simulate via:
 - `pygame` (live color changes)
 - Text-only fallback:
 
-´´text  
+´´´text  
 ######  
 ####  
 ##  
-´´
+´´´
 
 #### Sound
 
@@ -952,9 +951,9 @@ Otherwise: treat abstractly in early versions.
 
 Console print or GUI label:
 
-´´python  
+´´´python  
 print("Aura: twilight gold")  
-´´
+´´´
 
 Can extend with:
 
@@ -964,10 +963,10 @@ Can extend with:
 
 Even this works:
 
-´´python  
+´´´python  
 if energy > 5: aura_text = "vibrant"  
 else: aura_text = "calm"  
-´´
+´´´
 
 #### Color / Aura Visualization
 
@@ -986,9 +985,9 @@ Run two instances or threads and let them **talk**.
 - **Sockets** (Python `socket`)  
   - Example impulse:
 
-    ´´json  
+    ´´´json  
     { "impulse": "patternX", "intensity": 0.8 }  
-    ´´
+    ´´´
 
 - **ZeroMQ** via `pyzmq` — great for pub/sub models  
 - **MQTT** (`paho-mqtt`, `MQTT.jl`) — fits IoT usage  
