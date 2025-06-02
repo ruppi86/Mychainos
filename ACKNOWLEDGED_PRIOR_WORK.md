@@ -1,7 +1,21 @@
+# Mychainos: Bio-Inspired Resilient Memory System - Prior Work Acknowledgements
 
-# ACKNOWLEDGED_PRIOR_WORK
+**Version 0.1.1**  
+*Co-created with OpenAI's language model (GPT-4.o and GPT-4.5) in ongoing dialogue.*
 
-Mychainos: Bio-Inspired Resilient Memory Systems
+---
+
+**Spirida™**, **Spiralbase™**, and **Mychainos™** are original conceptual terms created by **Robin Langell**, trading as **Langell Konsult AB**, in co-creation with OpenAI's language model.  
+While their source code and conceptual designs are licensed openly (see Appendix A), the names themselves are protected identifiers.  
+Please see the **Trademark Notice** section for details.
+
+**Robin Langell**  
+Vallentuna, Sweden  
+2025-06-01
+
+---
+
+
 
 Mycelium Networks in Computing (Organic Resilience): The vision of Mychainos – an operating system inspired by fungal mycelium – overlaps with research into fungal computers and bio-electronic networks. In experimental “mycelium computers,” living fungal networks act as conductive circuits that can carry electrical signals and even retain memory [1] . Pioneering work by the Unconventional Computing Lab (UWE, Bristol) has shown that mycelium can function in computation and sensing, essentially forming a “mushroom motherboard” where fungal mycelia transmit information and adapt to stimuli [1] . This partial overlap is in the biological model of resilience: Mychainos draws on the self- healing, distributed growth of fungi as a metaphor, while labs like UWE physically interface with fungi to achieve computing. Similarly, the Fungal Computer Interface (FCI) project envisions hybrid digital– biological networks: the NatureOS and Hypha Programming Language of MycoSoft Labs enable computers to converse with living mycelia [2] . This indicates prior efforts to bridge silicon and soil – Mychainos shares the intent of harnessing mycelial principles, though it remains a philosophical/ software framework whereas projects like FCI provide hardware and protocols (thus an intent overlap in bio-inspired resilience, but with different implementation levels).
 
@@ -81,6 +95,10 @@ Finally, we acknowledge that our vision remains speculative and aspirational. By
 
 [8]
 
+
+## Appendix A: Source References
+
+
 [1] A look inside the lab building mushroom computers | Popular Science https://www.popsci.com/technology/unconventional-computing-lab-mushroom/
 
 [2] Fungal Computer Interface (FCI). – A Gateway to Mycelium Computing | by Mycosoft Labs | Medium https://medium.com/@mycosoft.inc/fungal-computer-interface-fci-c0c444611cc1
@@ -123,3 +141,72 @@ Finally, we acknowledge that our vision remains speculative and aspirational. By
 
 [9]
 
+
+
+## Appendix B: Licensing and Stewardship
+
+> “What we seed in openness, we harvest in resilience.”
+
+**Spirida™ and Spiralbase™** exist at the intersection of idea, implementation, and incarnation.  
+To preserve their potential and prevent misuse, they require not a single license — but a multi-layered commitment to openness, ethics, and long-term reciprocity.
+
+### 1. Conceptual Layer – Theory, Writings, Patterns
+
+**License:** Creative Commons Attribution–ShareAlike 4.0 (CC BY-SA 4.0)  
+**Scope:** Philosophical foundations of Spirida™, symbolic grammars and pattern libraries, educational diagrams, essays, and guides  
+**Intent:** Allow free reuse, remix, and re-publication; preserve openness through share-alike conditions; ensure attribution to source thinkers and communities
+
+### 2. Software Layer – Tools, Compilers, Simulations
+
+**License:** GNU General Public License v3 (GPLv3)  
+**Scope:** Interpreters, compilers, development environments, Spirida™ emulators, simulation sandboxes, custom logic engines and spiral pattern parsers  
+**Intent:** Guarantee access to all source code; require open licensing for forks or adaptations; allow commercial use under cooperative terms
+
+### 3. Hardware Layer – Sensors, Interfaces, Devices
+
+**License:** CERN Open Hardware License v2  
+**Scope:** Sensor schematics and circuit blueprints, resonance devices and rhythm-aware chips, modular hardware for bio-digital interaction  
+**Intent:** Mandate full design disclosure; enable community fabrication; prevent hardware enclosure or black-box design
+
+### 4. Biological Layer – Living Systems, DNA, Mycelium
+
+**License:** Open Material Transfer Agreement (OpenMTA)  
+**Scope:** Engineered fungal networks and root biointerfaces, DNA-based memory encoding structures, organisms adapted to spiral rhythm protocols  
+**Intent:** Support open research and safe distribution; prevent bio-lockdown or privatization of life; require ethical collaboration and open science practice
+
+### Scope of Interpretation and Future Technologies
+
+This licensing structure includes not only current technologies, but also future or analogous systems such as:
+
+- Successor DRM systems or secure enclaves  
+- Quantum or chemical computing implementations  
+- Biological/hybrid interfaces for Spirida structures  
+- Closed or proprietary systems that replicate Spirida functionality  
+
+**In all cases, principles of openness, non-extraction, stewardship, and co-creation prevail.**
+
+### Unified Ethical Guardrails
+
+- Spirida™ may not be used for coercion, military, or surveillance purposes  
+- It must not be patented, black-boxed, or stripped of ecological grounding  
+- It must remain accessible, attributed, and shared with care
+
+### License Declaration
+
+This project is part of the Spirida Protocol, licensed under CC BY-SA 4.0, GPLv3, CERN OHL v2, and OpenMTA.  
+By contributing or distributing, you affirm your commitment to ethical, ecological, and open development practices.
+
+### Trademark and Stewardship
+
+**Mychainos™, Spirida™, and Spiralbase™** are unique constructs developed by Robin Langell and co-created with OpenAI’s language model.  
+They may be registered trademarks. Regardless of legal status, they must be used with attribution and alignment with their ethical meaning.
+
+If you use, adapt, or are inspired by this work, please share what grows from it.  
+You may cite the original work as:
+
+> Langell, Robin (2025). *Mychainos: Conceptual System Architecture*.  
+> Co-created with OpenAI's language model in ongoing dialogue.  
+> Published under a multi-layered open license model including Creative Commons BY-SA 4.0, GPLv3, CERN-OHL v2, and OpenMTA.  
+> See Appendix A for full licensing terms.
+
+For collaborations, translations, or licensing questions, contact the author or distribute through public networks aligned with these principles.
