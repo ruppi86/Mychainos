@@ -1,6 +1,7 @@
 # Mychainos: Conceptual System Architecture
 
-**Version 0.1.1**  
+**Version 0.1.1**
+Robin Langell, 2025-06-01, Vallentuna, Sweden
 *Co-created with OpenAI's language model (GPT-4.o and GPT-4.5) in ongoing dialogue.*
 
 ---

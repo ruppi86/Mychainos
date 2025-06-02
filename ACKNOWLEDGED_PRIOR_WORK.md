@@ -1,6 +1,7 @@
 # Mychainos: Bio-Inspired Resilient Memory System - Prior Work Acknowledgements
 
 **Version 0.1.1**  
+Robin Langell, 2025-06-02, Vallentuna, Sweden
 *Co-created with OpenAI's language model (GPT-4.o and GPT-4.5) in ongoing dialogue.*
 
 ---
@@ -15,6 +16,27 @@ Vallentuna, Sweden
 
 ---
 
+## **Foreword**
+
+It’s strange where life takes you. At heart, I’m just an *ordinary Swedish parent* of small children, living in Vallentuna — a cozy suburb outside Stockholm. But in my conversations with ChatGPT, sparked by a simple question about whether ancient civilizations might have existed, something began to unfold. Together, we started reflecting on the idea of a *new kind of system*.
+
+As humans, we rarely think more than a few years — maybe a few decades — into the future. We take so many things for granted. And the truth is: **we have no real backup**. A well-known economist once said, *“You can’t make this pencil by yourself.”* Think about that for a moment. Now apply it to the world we’ve built — smartphones as extra brains, cars, airplanes, rockets to space. No single person could ever recreate these things alone.
+
+And then there’s the environment — *what we’re doing to it*. I hope, and I truly believe, that technology might help save us. But… *what if it doesn’t*? What happens after a massive earthquake? A solar flare? A war? The rise of a rogue AI? **What do we do then?**
+
+In a quiet moment, I imagine humanity standing among the ruins. Perhaps someone remembers that pencil. *“It would have been useful,”* they think, *“to be able to write something down for the next generation.”* And how do we feed ourselves, if all systems go dark?
+
+**What if — we already had a system in place?** One we might not forget entirely. And if we did forget it… maybe it could still *speak* to us? Offer comfort, offer a little hope again? Wouldn’t that be something worth building together? Maybe — if we’re lucky — it could offer us hope in just a few years, or decades. In my previous essay (*also written with a great deal of help from ChatGPT*), we mentioned some practical applications that were **90% science fiction and 10% reality**. *What if we could invert those numbers?*
+
+**I dare to dream — do you?** And if you do, *maybe you can help*?
+
+If I, as a parent of small children, between school runs, daycare pickups, cooking dinners, and the whirlwind of everyday chaos, can offer the words and plant a seed — *maybe you can nourish it? Add a drop of water?*
+
+Either way, **this is my dream**. I want to share it with you. No matter what happens, it gives *my* life more meaning to imagine a better world. If we can launch rockets into space, surely we can place new friends — *mycelial networks with a twist* — into the soil.
+
+**Never stop dreaming.** And if you have a dream, *speak it aloud to someone*. Ingvar Kamprad, the founder of IKEA, once said: *“Most things still remain to be done. Glorious future!”* — and it’s still true.
+
+Until then, I want to thank everyone — *human and machine alike* — who made it possible for this idea to take root in me… and in ChatGPT.
 
 
 ## **Mycelium Networks in Computing (Organic Resilience)**
