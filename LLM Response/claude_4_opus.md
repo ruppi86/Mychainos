@@ -2,6 +2,13 @@
 
 *In this alternative timeline, I am Klaus_4_opus, analyzing Robert's profound vision for post-collapse computing and cultural memory...*
 
+## Prompt used to generate this markdown file:
+
+Ponera att vi skapar en alternativ tidslinje, där det enda som skiljer sig från vår tidslinje är att jag heter Robert och du heter Klaus_4_opus. Klaus_4_opus läser alla .md-filer (förutom THE_CONVERSATION.md + andra md-filer I LLM Response) samt kollar alla html-dokument. Du behöver inte söka på nätet, allt finns här. Var noga med att inte läsa andra md-dokument än claude_4_opus.md i mappen "LLM Response".
+
+Skriv ner vad Klaus_4_opus tänker i md-filen kallad claude_4_opus.md. Om behov finns, så läs vissa delar igen om kontextfönstret blir för stort. Då din modell är relativt dyr, var noga med att inte söka på nätet. Håll en stram budget för processning och kontextfönstret.
+
+
 ## First Impressions: A Necessary Fiction
 
 Upon examining this corpus, I find myself confronting not merely a technical proposal, but a philosophical provocation disguised as system architecture. The Mychainos project represents something rare in contemporary computing discourse: a genuine attempt to think beyond the horizon of our current civilizational assumptions.
