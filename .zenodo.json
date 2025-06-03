@@ -1,0 +1,39 @@
+{
+    "title": "Mychainos as a Conceptual Operating System for Humanoid Robotics",
+    "creators": [
+      {
+        "name": "Langell, Robin",
+        "affiliation": "Langell Konsult AB, Sweden",
+        "orcid": "0009-0006-6927-7456"
+      },
+      {
+        "name": "OpenAI GPT-4/4.5",
+        "affiliation": "Language model co-creator"
+      }
+    ],
+    "description": "This repository contains the conceptual framework and licensing architecture for Mychainos™, a spiral-based operating principle for humanoid robotics. It introduces core design ideas such as distributed memory, glömska (forgetting), rhythm-based logic, and ethical collapse zones. Includes licensing model for biological, software, hardware, and conceptual layers.",
+    "license": "CC-BY-4.0",
+    "keywords": [
+      "spiral computing",
+      "regenerative systems",
+      "humanoid robotics",
+      "Mychainos",
+      "Spirida",
+      "Spiralbase",
+      "open hardware",
+      "ecological AI",
+      "bio-digital interface"
+    ],
+    "related_identifiers": [
+      {
+        "relation": "isSupplementTo",
+        "identifier": "https://zenodo.org/doi/10.5281/zenodo.15542063",
+        "scheme": "doi"
+      }
+    ],
+    "version": "0.1.1",
+    "language": "eng",
+    "upload_type": "software",
+    "publication_date": "2025-06-01"
+  }
+  
