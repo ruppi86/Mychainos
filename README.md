@@ -12,11 +12,13 @@ Together, these components offer a new kind of computing stack – one that co-e
 
 ## 🌍 Online Resources
 
-- **Official website:** [https://www.mychainos.org](https://www.mychainos.org)  
+- **Official website:** [https://www.mychainos.org](https://www.mychainos.org)  *under construction*
 - **Foundational essay:** *Beyond a Piktun: Remembering in the Age of Restart through a Resilient Mycelic Operating System*  
   → [Zenodo Record 15542063](https://zenodo.org/records/15542063)  
 - **Technical supplement:** *Spirida & Spiralbase – A Biocomputational Language and Memory System for Rhythmic, Regenerative Computing*  
   → [Zenodo Record 15550918](https://zenodo.org/records/15550918)
+- **Github release in zenodo:** 
+  → [Zenodo Record 15583037](https://zenodo.org/records/15583037)
 
 ---
 
