@@ -69,5 +69,5 @@ If you share the dream of regenerative, ecological computing – feel free to co
 
 More soon. 
 
-Mycelic organic/operation system desinger
+Mycelic organic/operation system designer
 **– Robin Langell**
