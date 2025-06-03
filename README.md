@@ -65,6 +65,7 @@ Use of these names in derivative or commercial contexts should follow fair use p
 This project welcomes constructive input, translation efforts, forks, discussions, and concept refinement.  
 If you share the dream of regenerative, ecological computing – feel free to contribute or get in touch.
 
-More soon.
+More soon. 
 
+Mycelic organic/operation system desinger
 **– Robin Langell**
