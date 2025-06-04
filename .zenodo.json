@@ -1,5 +1,5 @@
 {
-    "title": "Mychainos as a Conceptual Operating System for Humanoid Robotics",
+    "title": "Beyond Silicon Dreams: The Mychainos Paradigm and the Future of Contemplative Intelligence",
     "creators": [
       {
         "name": "Langell, Robin",
@@ -7,33 +7,48 @@
         "orcid": "0009-0006-6927-7456"
       },
       {
-        "name": "OpenAI GPT-4/4.5",
-        "affiliation": "Language model co-creator"
+        "name": "Claude 4 Sonnet",
+        "affiliation": "Anthropic"
+      },
+      {
+        "name": "ChatGPT-4o",
+        "affiliation": "OpenAI"
       }
     ],
-    "description": "This repository contains the conceptual framework and licensing architecture for Mychainos™, a spiral-based operating principle for humanoid robotics. It introduces core design ideas such as distributed memory, glömska (forgetting), rhythm-based logic, and ethical collapse zones. Includes licensing model for biological, software, hardware, and conceptual layers.",
-    "license": "CC-BY-4.0",
+    "description": "An interdisciplinary essay exploring the Mychainos™ paradigm—an ecological, contemplative approach to artificial intelligence. Written through collaborative dialogue between Robin Langell, Claude 4 Sonnet (Anthropic), and ChatGPT-4o (OpenAI), this work introduces Spirida™ (a spiral-based programming language), Spiralbase™ (a memory system with rhythmic forgetting), and Urspiral (foundational algorithms). The essay builds on earlier publications and supplements the core repositories Spirida and Spiralbase with philosophical framing, implementation context, and use cases in education, governance, and collective intelligence.",
+    "license": "CC-BY-SA-4.0",
     "keywords": [
-      "spiral computing",
-      "regenerative systems",
-      "humanoid robotics",
       "Mychainos",
       "Spirida",
       "Spiralbase",
-      "open hardware",
-      "ecological AI",
-      "bio-digital interface"
+      "ecological computing",
+      "contemplative technology",
+      "regenerative AI",
+      "spiral epistemology",
+      "post-anthropocentric computing",
+      "collaborative intelligence"
     ],
     "related_identifiers": [
       {
-        "relation": "isSupplementTo",
+        "relation": "isPartOf",
         "identifier": "https://zenodo.org/doi/10.5281/zenodo.15542063",
         "scheme": "doi"
+      },
+      {
+        "relation": "isSupplementTo",
+        "identifier": "https://zenodo.org/records/15589457",
+        "scheme": "url"
+      },
+      {
+        "relation": "isSupplementTo",
+        "identifier": "https://zenodo.org/records/15591227",
+        "scheme": "url"
       }
     ],
-    "version": "0.1.1",
+    "version": "0.2.0",
     "language": "eng",
-    "upload_type": "software",
-    "publication_date": "2025-06-01"
+    "upload_type": "publication",
+    "publication_type": "article",
+    "publication_date": "2025-06-04"
   }
   
