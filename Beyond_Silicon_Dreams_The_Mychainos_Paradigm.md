@@ -61,7 +61,7 @@ This is not merely biomimetic—copying nature's forms while maintaining industr
 
 Mychainos operates on what we might call *soil time*—the temporal rhythms of ecology rather than electronics. Mycelial signals propagate at roughly 86 meters per day, creating networks that can span thousands of hectares and persist for millennia. This is not a limitation but a different temporal ontology entirely.
 
-Consider the largest living organism on Earth: a honey fungus (*Armillaria ostoyae*) in Oregon's Blue Mountains spanning 9.6 square kilometers and potentially 8,000 years old. We are not talking about building new infrastructure but interfacing with existing biological networks that dwarf any human construction in both scale and longevity.
+Consider the largest living organism on Earth: a honey fungus (*Armillaria ostoyae*) in Oregon's Blue Mountains spanning 9 square kilometers and potentially 8,000 years old. We are not talking about building new infrastructure but interfacing with existing biological networks that dwarf any human construction in both scale and longevity.
 
 This suggests computing that operates on geological rather than economic timescales—systems designed not for the next product cycle but for the next several generations.
 
