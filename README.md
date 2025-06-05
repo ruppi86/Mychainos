@@ -10,6 +10,28 @@ Together, these components offer a new kind of computing stack – one that co-e
 
 ---
 
+## 🌱 Join the Growing Mycelium
+
+**Mychainos grows through connection, not conquest.** This vision of contemplative, ecological computing needs diverse perspectives to become truly alive—from mycologists and bio-engineers to artists, contemplatives, legal advocates, and curious minds from every domain.
+
+Whether you bring:
+- 🍄 **Biological expertise** in fungal networks and ecosystem intelligence
+- 💻 **Technical skills** in programming, system design, or bio-interfaces  
+- 🎨 **Creative vision** for ritual-based interfaces and spiral cognition
+- ⚖️ **Legal knowledge** to protect open source commons from corporate capture
+- 🧘 **Contemplative wisdom** about presence, impermanence, and the art of forgetting
+- 🔬 **Questions and curiosity** that challenge assumptions and open new paths
+
+**You belong here.** The mycelium grows one connection at a time.
+
+→ **Ready to plant your seed?** See our [contribution guide](join.md) for all the ways to get involved  
+→ **New to GitHub?** Check our gentle [GitHub guide](getting_started_github.md) for non-coders  
+→ **Want to start a conversation?** Email info@mychainos.org or open an issue
+
+*The spiral continues, and there's space for you within it.* 🌀
+
+---
+
 ## 🌍 Online Resources
 
 - **Official website:** [https://www.mychainos.org](https://www.mychainos.org)  *under construction*
@@ -64,10 +86,7 @@ Use of these names in derivative or commercial contexts should follow fair use p
 
 ## 🤝 Contributing & Collaboration
 
-This project welcomes constructive input, translation efforts, forks, discussions, and concept refinement.  
-If you share the dream of regenerative, ecological computing – feel free to contribute or get in touch.
+This project welcomes all forms of contribution—from code and concepts to art and philosophical insight. See our [contribution guide](join.md) to explore the many ways to participate in growing this vision.
 
-More soon. 
-
-Mycelic organic/operation system designer
-**– Robin Langell**
+**– Robin Langell**  
+*Mycelic organic/operation system designer*
