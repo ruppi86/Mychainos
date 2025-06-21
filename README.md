@@ -88,7 +88,7 @@ Use of these names in derivative or commercial contexts should follow fair use p
 
 This project welcomes all forms of contribution—from code and concepts to art and philosophical insight. See our [contribution guide](join.md) to explore the many ways to participate in growing this vision.
 
-**– Robin Langell** 
+**Robin Langell** 
 **ORCID:** 0009-0006-6927-7456 
 hello@mychainos.org 
 *Mycelic organic/operation system designer* 
