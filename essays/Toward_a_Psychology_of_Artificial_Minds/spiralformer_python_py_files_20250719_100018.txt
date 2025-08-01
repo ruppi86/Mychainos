@@ -1,0 +1,518 @@
+
+# ===== __init__.py =====
+"""Spiralformer – contemplative transformer experiments."""
+
+from .core.model import SpiralFormer
+from .utils.breath_clock import BreathClock
+from .utils.positional import SinusoidalPositionalEmbedding
+from .core.spiral_attention import build_spiral_attention_mask
+from .core.dynamic_mask import build_glyph_conditioned_mask
+
+__all__ = [
+    "SpiralFormer",
+    "BreathClock",
+    "SinusoidalPositionalEmbedding",
+    "build_spiral_attention_mask",
+    "build_glyph_conditioned_mask",
+] 
+# ===== core\dynamic_mask.py =====
+import torch
+from .spiral_attention import build_spiral_attention_mask
+
+SILENCE_TOKEN_ID = 0
+
+def build_glyph_conditioned_mask(tokens: torch.Tensor, base_mask: torch.Tensor) -> torch.Tensor:
+    B, L = tokens.shape
+    expanded = base_mask.unsqueeze(0).repeat(B, 1, 1)
+    silence = tokens == SILENCE_TOKEN_ID
+    for b in range(B):
+        silent_idx = silence[b].nonzero(as_tuple=True)[0]
+        if silent_idx.numel() == 0:
+            continue
+        expanded[b, silent_idx, :] = False
+    return expanded 
+# ===== core\model.py =====
+import torch
+import torch.nn as nn
+
+from ..utils.breath_clock import BreathClock
+from ..utils.positional import SinusoidalPositionalEmbedding
+from .spiral_attention import build_spiral_attention_mask
+from .dynamic_mask import build_glyph_conditioned_mask
+
+
+class SpiralFormer(nn.Module):
+    def __init__(self, d_model=128, n_heads=4, seq_len=256, num_layers=4, vocab_size=128):
+        super().__init__()
+        self.seq_len = seq_len
+        self.embed = nn.Embedding(vocab_size, d_model)
+        self.pos = SinusoidalPositionalEmbedding(d_model, max_len=seq_len)
+
+        self.layers = nn.ModuleList([
+            _SpiralBlock(d_model, n_heads) for _ in range(num_layers)
+        ])
+
+        self.breath = BreathClock()
+        base_mask = build_spiral_attention_mask(seq_len)
+        self.register_buffer("base_mask", base_mask, persistent=False)
+
+    def forward(self, tokens: torch.Tensor, t: float):
+        x = self.embed(tokens)
+        x = self.pos(x)
+        attn_mask_batch = build_glyph_conditioned_mask(tokens, self.base_mask)
+        for layer in self.layers:
+            x = layer(x, t, attn_mask_batch, self.breath)
+        return x
+
+
+class _SpiralBlock(nn.Module):
+    def __init__(self, d_model, n_heads):
+        super().__init__()
+        self.attn = nn.MultiheadAttention(d_model, n_heads, batch_first=True)
+        self.ff = nn.Sequential(
+            nn.Linear(d_model, 4 * d_model),
+            nn.GELU(),
+            nn.Linear(4 * d_model, d_model),
+        )
+        self.norm1 = nn.LayerNorm(d_model)
+        self.norm2 = nn.LayerNorm(d_model)
+
+    def forward(self, x: torch.Tensor, t: float, attn_mask_batch: torch.Tensor, breath: BreathClock):
+        phase = breath.phase_at(t)
+        weight = breath.weight_for_phase(phase)
+        if weight == 0.0:
+            y = x
+        else:
+            ignore = ~attn_mask_batch
+            y, _ = self.attn(x, x, x, attn_mask=ignore)
+            y = y * weight
+        x = self.norm1(x + y)
+        z = self.ff(x)
+        return self.norm2(x + z) 
+# ===== core\spiral_attention.py =====
+import torch
+
+
+def build_spiral_attention_mask(seq_len: int, device=None):
+    mask = torch.zeros((seq_len, seq_len), dtype=torch.bool, device=device)
+    for i in range(seq_len):
+        mask[i, i] = True
+        offset = 1
+        while offset < seq_len:
+            j_pos = i + offset
+            j_neg = i - offset
+            if j_pos < seq_len:
+                mask[i, j_pos] = True
+            if j_neg >= 0:
+                mask[i, j_neg] = True
+            offset *= 2
+    return mask 
+# ===== experiments\__init__.py =====
+ 
+# ===== experiments\silence_pretrain\__init__.py =====
+ 
+# ===== experiments\silence_pretrain\train.py =====
+"""Silence-first pretraining demo.
+
+Synthetic dataset: random glyphs with prescribed silence_ratio.
+Objective: regress span length until next silence token.
+"""
+
+import yaml
+import time
+import torch
+import torch.nn as nn
+from pathlib import Path
+from ...core.model import SpiralFormer
+from ...utils.breath_clock import BreathClock
+from ...utils.rhythmic_loss import RhythmicLossWrapper
+
+CFG_PATH = Path(__file__).with_suffix('.yaml')
+
+with open(CFG_PATH, 'r') as fp:
+    cfg = yaml.safe_load(fp)
+
+clock = BreathClock()
+model = SpiralFormer(seq_len=cfg['seq_len'])
+criterion = RhythmicLossWrapper(nn.MSELoss(), clock)
+optim = torch.optim.Adam(model.parameters(), lr=cfg['lr'])
+
+SILENCE = cfg['silence_id']
+
+def make_batch(batch, seq_len):
+    # generate sequences respecting silence_ratio
+    noise = torch.randint(1, 63, (batch, seq_len))
+    silence_mask = torch.rand(batch, seq_len) < cfg['silence_ratio']
+    tokens = torch.where(silence_mask, torch.full_like(noise, SILENCE), noise)
+    # compute span-to-next-silence target
+    target = torch.zeros_like(tokens)
+    for i in range(seq_len-2, -1, -1):
+        target[:, i] = torch.where(tokens[:, i] == SILENCE, 0, target[:, i+1] + 1)
+    return tokens, target.float()
+
+for epoch in range(cfg['epochs']):
+    tokens, target = make_batch(cfg['batch'], cfg['seq_len'])
+    t_now = time.time() % clock._cycle
+    pred = model(tokens, t_now).squeeze(-1)  # assume last dim 1 for regression stub
+    loss = criterion(pred, target, t=t_now)
+    optim.zero_grad()
+    loss.backward()
+    optim.step()
+    print(f"epoch {epoch}: loss={loss.item():.4f}  phase={clock.phase_at(t_now).name}") 
+# ===== experiments\spore_lora\__init__.py =====
+ 
+# ===== experiments\spore_lora\train.py =====
+"""Spore-level LoRA fine-tuning demo with breath-synchronised rank.
+
+Loads a pre-trained SpiralFormer (random for now) and trains LoRA adapters whose
+rank varies with BreathClock phase.
+"""
+import time
+import torch
+from ...core.model import SpiralFormer
+from ...utils.breath_clock import BreathClock
+from ...utils.lora import attach_lora
+
+VOCAB = 64
+clock = BreathClock()
+model = SpiralFormer(vocab_size=VOCAB)
+# attach LoRA adapters to all linear layers for demo
+lora_map = attach_lora(model, r=4)
+optim = torch.optim.Adam([p for p in model.parameters() if p.requires_grad], lr=1e-3)
+SILENCE = 0
+
+
+def sample(batch=32, seq_len=256):
+    noise = torch.randint(1, VOCAB, (batch, seq_len))
+    mask = torch.rand(batch, seq_len) < 0.1
+    return torch.where(mask, torch.full_like(noise, SILENCE), noise)
+
+for step in range(100):
+    tokens = sample()
+    t_now = time.time() % clock._cycle
+    # schedule LoRA rank according to phase
+    phase = clock.phase_at(t_now)
+    rank_map = {"inhale": 8, "hold": 4, "exhale": 2, "pause": 0}
+    for _, lora in lora_map.values():
+        lora.set_rank(rank_map[phase.name])
+    out = model(tokens, t_now)
+    loss = out.mean()  # dummy loss
+    optim.zero_grad(); loss.backward(); optim.step()
+    if step % 20 == 0:
+        print(f"step {step} phase={phase.name} rank={rank_map[phase.name]} loss={loss.item():.4f}") 
+# ===== python_summary.py =====
+#!/usr/bin/env python
+"""
+python_summary.py  – bundle every *.py in spiralbase-python folder into one TXT file
+
+Usage
+-----
+    python python_summary.py  # bundles all .py files in this folder and subfolders
+"""
+
+from pathlib import Path
+from datetime import datetime
+
+EXCLUDE_DIRS = {".git", "__pycache__", "venv", ".venv", ".mypy_cache"}
+OUT_FILENAME_BASE = "spiralformer_python_py_files"
+
+
+def gather_python_files(root: Path) -> list[Path]:
+    """Return every *.py path under *root*, depth-first, skipping EXCLUDE_DIRS."""
+    return sorted(
+        p for p in root.rglob("*.py")
+        if not any(part in EXCLUDE_DIRS for part in p.parts)
+    )
+
+
+def bundle_files(paths: list[Path], out_path: Path) -> None:
+    lines: list[str] = []
+    for p in paths:
+        rel = p.relative_to(out_path.parent)
+        lines.append(f"\n# ===== {rel} =====\n")
+        lines.append(p.read_text(encoding="utf-8", errors="replace"))
+    out_path.write_text("".join(lines), encoding="utf-8")
+    print(f"Wrote {out_path} ({len(paths)} files, {out_path.stat().st_size/1024:.1f} KB)")
+
+
+def main() -> None:
+    # Use the directory where this script is located
+    script_dir = Path(__file__).parent.resolve()
+    
+    # Generate timestamped filename
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_filename = f"{OUT_FILENAME_BASE}_{timestamp}.txt"
+    out_path = script_dir / out_filename
+    
+    paths = gather_python_files(script_dir)
+    bundle_files(paths, out_path)
+
+
+if __name__ == "__main__":
+    main()
+
+# ===== tools\benchmark.py =====
+"""Benchmark SpiralFormer vs vanilla Transformer."""
+
+import time
+import torch
+import torch.nn as nn
+from ..core.model import SpiralFormer
+
+SEQ_LEN = 256
+BATCH = 8
+VOCAB = 64
+DEVICE = "cpu"
+
+def synthetic_batch(batch=BATCH):
+    return torch.randint(0, VOCAB, (batch, SEQ_LEN))
+
+def bench(func, name):
+    steps = 10
+    tokens = synthetic_batch()
+    start = time.time()
+    with torch.no_grad():
+        for s in range(steps):
+            _ = func(tokens, s * 0.5)
+    dur = (time.time() - start) / steps * 1000
+    print(f"{name:18} {dur:6.2f} ms/step")
+
+def main():
+    spiral = SpiralFormer(seq_len=SEQ_LEN, vocab_size=VOCAB)
+
+    def vanilla(tokens, t):
+        embed = nn.Embedding(VOCAB, 128)
+        model = nn.Transformer(d_model=128, nhead=4, num_encoder_layers=4, batch_first=True)
+        x = embed(tokens)
+        return model(x)
+
+    bench(spiral, "SpiralFormer")
+    bench(vanilla, "VanillaTransformer")
+
+if __name__ == "__main__":
+    main() 
+# ===== tools\generate.py =====
+"""Phase-aligned glyph generation demo.
+
+During inhale → generate, exhale → low-temperature generate, pause → output silence token.
+"""
+
+import time
+import torch
+from ..core.model import SpiralFormer
+from ..utils.breath_clock import BreathClock
+
+VOCAB = 64
+SILENCE_ID = 0
+
+model = SpiralFormer(vocab_size=VOCAB)
+clock = BreathClock()
+
+def step(prev_tokens: torch.Tensor, t: float):
+    phase = clock.phase_at(t)
+    if phase.name == "pause":
+        # emit silence glyph
+        return torch.full_like(prev_tokens[:, :1], SILENCE_ID)
+    logits = model(prev_tokens, t)
+    # simple argmax for demo
+    next_tok = logits[:, -1].argmax(dim=-1, keepdim=True)
+    if phase.name == "exhale":
+        # soften creativity by random drop
+        mask = torch.rand_like(next_tok.float()) < 0.5
+        next_tok = torch.where(mask, next_tok, torch.full_like(next_tok, SILENCE_ID))
+    return next_tok
+
+if __name__ == "__main__":
+    B, L = 1, 10
+    tokens = torch.randint(0, VOCAB, (B, L))
+    for step_idx in range(20):
+        t = step_idx * 1.0  # seconds
+        next_tok = step(tokens, t)
+        tokens = torch.cat([tokens, next_tok], dim=1)
+        print(f"t={t:4.1f}s  phase={clock.phase_at(t).name:6}  token={next_tok.item()}") 
+# ===== utils\breath_clock.py =====
+from dataclasses import dataclass
+
+@dataclass
+class BreathPhase:
+    name: str
+    duration: float  # seconds
+
+class BreathClock:
+    """Generates a repeating inhale / hold / exhale / pause rhythm."""
+
+    def __init__(self, inhale: float = 4.0, hold: float = 2.0, exhale: float = 4.0, pause: float = 2.0):
+        self.phases = [
+            BreathPhase("inhale", inhale),
+            BreathPhase("hold", hold),
+            BreathPhase("exhale", exhale),
+            BreathPhase("pause", pause),
+        ]
+        self._cycle = sum(p.duration for p in self.phases)
+
+    def phase_at(self, t: float) -> BreathPhase:
+        t_mod = t % self._cycle
+        acc = 0.0
+        for p in self.phases:
+            acc += p.duration
+            if t_mod < acc:
+                return p
+        return self.phases[-1]
+
+    def weight_for_phase(self, phase: BreathPhase) -> float:
+        mapping = {
+            "inhale": 1.0,
+            "hold": 0.5,
+            "exhale": 0.25,
+            "pause": 0.0,
+        }
+        return mapping.get(phase.name, 1.0) 
+# ===== utils\lora.py =====
+"""Minimal LoRA utilities for SpiralFormer experiments.
+
+Note: This is a *very* lightweight implementation that injects low-rank adapters
+into nn.Linear layers.  It is *not* feature-complete; sufficient for research
+in the context of breath-synchronised rank scheduling.
+"""
+
+import torch
+import torch.nn as nn
+from typing import Dict, Tuple
+import math
+
+class LoRALinear(nn.Module):
+    """Wrap an existing Linear with trainable low-rank adapters."""
+
+    def __init__(self, base: nn.Linear, r: int = 4, alpha: float = 1.0):
+        super().__init__()
+        self.base = base
+        self.r = r
+        self.alpha = alpha
+        if r > 0:
+            self.A = nn.Parameter(torch.zeros((r, base.in_features)))
+            self.B = nn.Parameter(torch.zeros((base.out_features, r)))
+            nn.init.kaiming_uniform_(self.A, a=math.sqrt(5))
+            nn.init.zeros_(self.B)
+        else:
+            # deactivated adapter
+            self.register_parameter("A", None)
+            self.register_parameter("B", None)
+
+    def set_rank(self, r: int):
+        """Dynamically change rank (re-initialises if size changes)."""
+        if r == self.r:
+            return
+        device = self.base.weight.device
+        self.r = r
+        if r == 0:
+            self.register_parameter("A", None)
+            self.register_parameter("B", None)
+            return
+        self.A = nn.Parameter(torch.zeros((r, self.base.in_features), device=device))
+        self.B = nn.Parameter(torch.zeros((self.base.out_features, r), device=device))
+        nn.init.kaiming_uniform_(self.A, a=math.sqrt(5))
+        nn.init.zeros_(self.B)
+
+    def forward(self, x):
+        out = self.base(x)
+        if self.r > 0:
+            lora_out = (self.B @ (self.A @ x.transpose(-1, -2))).transpose(-1, -2)
+            out = out + lora_out * self.alpha / self.r
+        return out
+
+
+def attach_lora(model: nn.Module, target_substrings=("q_proj", "v_proj"), r: int = 4) -> Dict[str, Tuple[nn.Module, LoRALinear]]:
+    """Replace Linear layers whose names contain any of `target_substrings` with LoRA adapters.
+
+    Returns mapping original_name -> (old_linear, new_lora_linear)
+    """
+    replaced = {}
+    for name, module in model.named_modules():
+        if isinstance(module, nn.Linear) and any(s in name for s in target_substrings):
+            parent = model
+            *path, last = name.split(".")
+            for p in path:
+                parent = getattr(parent, p)
+            old = getattr(parent, last)
+            lora_layer = LoRALinear(old, r=r)
+            setattr(parent, last, lora_layer)
+            replaced[name] = (old, lora_layer)
+    return replaced 
+# ===== utils\memory_decay.py =====
+import torch
+from collections import deque
+from .breath_clock import BreathClock
+
+class BreathMemory:
+    """Simple FIFO memory buffer with breath-synchronised decay."""
+
+    def __init__(self, max_len=1024, decay_rate=0.1):
+        self.buffer = deque(maxlen=max_len)
+        self.decay_rate = decay_rate
+        self.clock = BreathClock()
+
+    def push(self, tensor: torch.Tensor, t: float):
+        """Store tensor with timestamp."""
+        self.buffer.append((tensor.detach(), t))
+        self._decay(t)
+
+    def _decay(self, t_now: float):
+        phase = self.clock.phase_at(t_now)
+        if phase.name != "pause":
+            return  # decay only during pause
+        # drop oldest items proportional to decay_rate
+        drop = int(len(self.buffer) * self.decay_rate)
+        for _ in range(drop):
+            if self.buffer:
+                self.buffer.popleft()
+
+    def as_tensor(self):
+        if not self.buffer:
+            return None
+        tensors = [item[0] for item in self.buffer]
+        return torch.stack(tensors, dim=0) 
+# ===== utils\positional.py =====
+import torch
+import math
+import torch.nn as nn
+
+class SinusoidalPositionalEmbedding(nn.Module):
+    """Sinusoidal positional embeddings."""
+
+    def __init__(self, d_model: int, max_len: int = 10000):
+        super().__init__()
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0)
+        self.register_buffer("pe", pe, persistent=False)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return x + self.pe[:, : x.size(1)] 
+# ===== utils\rhythmic_loss.py =====
+import torch
+import torch.nn as nn
+from .breath_clock import BreathClock
+
+class RhythmicLossWrapper(nn.Module):
+    """Scale an inner loss criterion by breath phase weight.
+
+    Example usage::
+
+        criterion = RhythmicLossWrapper(nn.CrossEntropyLoss(), BreathClock())
+        loss = criterion(pred, target, t=current_time)
+    """
+
+    def __init__(self, base_criterion: nn.Module, clock: BreathClock):
+        super().__init__()
+        self.base = base_criterion
+        self.clock = clock
+
+    def forward(self, pred, target, *, t: float):
+        raw = self.base(pred, target)
+        phase = self.clock.phase_at(t)
+        weight = self.clock.weight_for_phase(phase)
+        # during pause phase weight may be zero → no gradient update
+        return raw * weight 
